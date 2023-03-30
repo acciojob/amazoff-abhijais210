@@ -79,7 +79,8 @@ public class OrderRepository {
     }
     public String getLastDeliveryTimeByPartnerId(String partnerId){
         int maxtime = 0;
-        for(String orderId : orderPartnerPair.get(partnerId)){
+        List<String> orders = orderPartnerPair.get(partnerId);
+        for(String orderId : orders){
             if(getOrderById(orderId).getDeliveryTime() > maxtime)
                 maxtime = getOrderById(orderId).getDeliveryTime();
         }
@@ -98,19 +99,19 @@ public class OrderRepository {
             time = "0"+String.valueOf(mm);
         }
         else{
-            time = String.valueOf(hh);
+            time = String.valueOf(mm);
         }
         return time;
     }
     public void deletePartnerById(String partnerId){
-        orderPartnerPair.remove(partnerId);
-        partnerDb.remove(partnerId);
         //now remove partner from assigned order MAP
         for(String orderID : assignedOrderDb.keySet()){
             String pId = assignedOrderDb.get(orderID);
             if(partnerId.equals(pId))
                 assignedOrderDb.remove(orderID);
         }
+        orderPartnerPair.remove(partnerId);
+        partnerDb.remove(partnerId);
     }
     public void deleteOrderById(String orderId){
         //before removing order from assignedOrderDb , store partner for that order
