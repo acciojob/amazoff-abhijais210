@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class OrderRepository {
@@ -89,26 +90,26 @@ public class OrderRepository {
         int mm = maxtime%60;
 
         if(hh/10 == 0){
-            time = "0"+String.valueOf(hh)+":";
+            time = time + "0"+String.valueOf(hh)+":";
         }
         else{
-            time = String.valueOf(hh)+":";
+            time = time + String.valueOf(hh)+":";
         }
 
         if(mm/10 == 0){
-            time = "0"+String.valueOf(mm);
+            time = time + "0"+String.valueOf(mm);
         }
         else{
-            time = String.valueOf(mm);
+            time = time + String.valueOf(mm);
         }
         return time;
     }
     public void deletePartnerById(String partnerId){
         //now remove partner from assigned order MAP
-        for(String orderID : assignedOrderDb.keySet()){
-            String pId = assignedOrderDb.get(orderID);
-            if(partnerId.equals(pId))
-                assignedOrderDb.remove(orderID);
+        for(Map.Entry<String,String> map : assignedOrderDb.entrySet()){
+            if(map.getValue().contains(partnerId)){
+                assignedOrderDb.remove(map.getKey());
+            }
         }
         orderPartnerPair.remove(partnerId);
         partnerDb.remove(partnerId);
