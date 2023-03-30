@@ -67,7 +67,7 @@ public class OrderRepository {
     public List<String> getAllOrders(){
         return new ArrayList<>(orderDb.keySet());
     }
-    public Integer getCountOfUnassignedOrders(){
+    public int getCountOfUnassignedOrders(){
 
       //now first we count all assigned Orders from OrderPartner Pair
        /* Integer assignOrders = 0;
