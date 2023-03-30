@@ -32,7 +32,7 @@ public class OrderService {
         return or.getPartnerById(partnerId);
     }
     //get total number of orders for a partner ID
-    public Integer getOrderCountByPartnerId(String partnerId){
+    public int getOrderCountByPartnerId(String partnerId){
         return or.getOrderCountByPartnerId(partnerId);
     }
     //get List of Orders for Delivery Partner by Partner ID
@@ -44,11 +44,11 @@ public class OrderService {
         return or.getAllOrders();
     }
     //get total numbers of Orders that have not been assigned yet to any of the delivery partners
-    public Integer getCountOfUnassignedOrders(){
+    public int getCountOfUnassignedOrders(){
         return or.getCountOfUnassignedOrders();
     }
     //count of orders that are left not delivered after a particular time
-    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time,String partnerId){
+    public int getOrdersLeftAfterGivenTimeByPartnerId(String time,String partnerId){
         //now first we convert our time from String to Integer
         String[] arr = time.split(":");
         int intTime = Integer.parseInt(arr[0])*60 + Integer.parseInt(arr[1]);

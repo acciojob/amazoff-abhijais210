@@ -9,17 +9,12 @@ import java.util.List;
 
 @Repository
 public class OrderRepository {
-    private HashMap<String,Order> orderDb;
-    private HashMap<String,DeliveryPartner> partnerDb;
-    private HashMap<String, List<String>> orderPartnerPair;
-    private HashMap<String,String> assignedOrderDb;
+    public HashMap<String,Order> orderDb = new HashMap<>();
+    public HashMap<String,DeliveryPartner> partnerDb = new HashMap<>();
+    public HashMap<String, List<String>> orderPartnerPair = new HashMap<>();
+    public HashMap<String,String> assignedOrderDb = new HashMap<>();
 
-    public OrderRepository() {
-        this.orderDb = new HashMap<>();
-        this.partnerDb = new HashMap<>();
-        this.orderPartnerPair = new HashMap<>();
-        this.assignedOrderDb = new HashMap<>();
-    }
+
     public void addOrder(Order order){
         String key = order.getId();
         orderDb.put(key,order);
@@ -56,15 +51,12 @@ public class OrderRepository {
             return orderPartnerPair.get(partnerId).size();
     }
     public List<String> getOrdersByPartnerId(String partnerId){
-        if(orderPartnerPair.containsKey(partnerId))
             return orderPartnerPair.get(partnerId);
-
-        return null;
     }
     public List<String> getAllOrders(){
         return new ArrayList<>(orderDb.keySet());
     }
-    public Integer getCountOfUnassignedOrders(){
+    public int getCountOfUnassignedOrders(){
 
       //now first we count all assigned Orders from OrderPartner Pair
        /* Integer assignOrders = 0;
@@ -77,8 +69,8 @@ public class OrderRepository {
         //now a little more Optimal way
         return orderDb.size() - assignedOrderDb.size();
     }
-    public Integer getOrdersLeftAfterGivenTimeByPartnerId(int intTime,String partnerId){
-        Integer count = 0;
+    public int getOrdersLeftAfterGivenTimeByPartnerId(int intTime,String partnerId){
+        int count = 0;
         for(String orderId : orderPartnerPair.get(partnerId)){
             if(getOrderById(orderId).getDeliveryTime() > intTime)
                 count++;
