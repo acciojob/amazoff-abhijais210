@@ -7,8 +7,8 @@ import java.util.List;
 
 @Service
 public class OrderService {
-    @Autowired
-    OrderRepository or;
+
+    OrderRepository or = new OrderRepository();
     //add Order
     public void addOrder(Order order){
         or.addOrder(order);
