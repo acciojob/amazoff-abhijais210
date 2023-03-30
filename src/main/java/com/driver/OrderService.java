@@ -50,27 +50,13 @@ public class OrderService {
     //count of orders that are left not delivered after a particular time
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time,String partnerId){
         //now first we convert our time from String to Integer
-        int HH = Integer.parseInt(time.substring(0,2));
-        int MM = Integer.parseInt(time.substring(2));
-        int intTime = (HH*60) + MM;
+        String[] arr = time.split(":");
+        int intTime = Integer.parseInt(arr[0])*60 + Integer.parseInt(arr[1]);
 
         return or.getOrdersLeftAfterGivenTimeByPartnerId(intTime,partnerId);
     }
     public String getLastDeliveryTimeByPartnerId(String partnerId){
-        int time = or.getLastDeliveryTimeByPartnerId(partnerId);
-        if(time == Integer.MIN_VALUE) return null;
-        //now convert time from int to String
-        int hh = time/60;
-        int mm = time%60;
-        String HH = Integer.toString(hh);
-        String MM = Integer.toString(mm);
-        if(hh >= 1 && hh <= 9){
-            HH = "0" + HH;
-        }
-        if(mm >= 1 && mm <= 9){
-            MM = "0" + MM;
-        }
-        return HH+":"+MM;
+        return or.getLastDeliveryTimeByPartnerId(partnerId);
     }
     public void deletePartnerById(String partnerId){
         or.deletePartnerById(partnerId);

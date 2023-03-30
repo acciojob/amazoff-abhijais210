@@ -53,10 +53,7 @@ public class OrderRepository {
         return partnerDb.get(partnerId);
     }
     public Integer getOrderCountByPartnerId(String partnerId){
-        if(orderPartnerPair.containsKey(partnerId))
             return orderPartnerPair.get(partnerId).size();
-
-        return null;
     }
     public List<String> getOrdersByPartnerId(String partnerId){
         if(orderPartnerPair.containsKey(partnerId))
@@ -67,7 +64,7 @@ public class OrderRepository {
     public List<String> getAllOrders(){
         return new ArrayList<>(orderDb.keySet());
     }
-    public int getCountOfUnassignedOrders(){
+    public Integer getCountOfUnassignedOrders(){
 
       //now first we count all assigned Orders from OrderPartner Pair
        /* Integer assignOrders = 0;
@@ -78,23 +75,38 @@ public class OrderRepository {
         return orderDb.size()-assignOrders; */
 
         //now a little more Optimal way
-        Integer unsigned = 0;
-        unsigned = orderDb.size() - assignedOrderDb.size();
-        return unsigned;
+        return orderDb.size() - assignedOrderDb.size();
     }
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(int intTime,String partnerId){
-        Integer count = null;
+        Integer count = 0;
         for(String orderId : orderPartnerPair.get(partnerId)){
             if(getOrderById(orderId).getDeliveryTime() > intTime)
                 count++;
         }
         return count;
     }
-    public int getLastDeliveryTimeByPartnerId(String partnerId){
-        int time = Integer.MIN_VALUE;
+    public String getLastDeliveryTimeByPartnerId(String partnerId){
+        int maxtime = 0;
         for(String orderId : orderPartnerPair.get(partnerId)){
-            if(getOrderById(orderId).getDeliveryTime() > time)
-                time = getOrderById(orderId).getDeliveryTime();
+            if(getOrderById(orderId).getDeliveryTime() > maxtime)
+                maxtime = getOrderById(orderId).getDeliveryTime();
+        }
+        String time = "";
+        int hh = maxtime/60;
+        int mm = maxtime%60;
+
+        if(hh/10 == 0){
+            time = "0"+String.valueOf(hh)+":";
+        }
+        else{
+            time = String.valueOf(hh)+":";
+        }
+
+        if(mm/10 == 0){
+            time = "0"+String.valueOf(mm);
+        }
+        else{
+            time = String.valueOf(hh);
         }
         return time;
     }
