@@ -78,7 +78,9 @@ public class OrderRepository {
         return orderDb.size()-assignOrders; */
 
         //now a little more Optimal way
-        return orderDb.size() - assignedOrderDb.size();
+        Integer unsigned = 0;
+        unsigned = orderDb.size() - assignedOrderDb.size();
+        return unsigned;
     }
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(int intTime,String partnerId){
         Integer count = null;
