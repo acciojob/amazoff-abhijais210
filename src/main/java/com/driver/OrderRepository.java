@@ -106,10 +106,14 @@ public class OrderRepository {
     }
     public void deletePartnerById(String partnerId){
         //now remove partner from assigned order MAP
-        for(Map.Entry<String,String> map : assignedOrderDb.entrySet()){
-            if(map.getValue().contains(partnerId)){
-                assignedOrderDb.remove(map.getKey());
-            }
+        List<String> orderId = new ArrayList<>();
+        for(String oID : assignedOrderDb.keySet()){
+            if(assignedOrderDb.get(oID).equals(partnerId))
+                orderId.add(oID);
+        }
+        //now traverse the OrderId List and remove assignOrderDB key set
+        for(String oID : orderId){
+            assignedOrderDb.remove(oID);
         }
         orderPartnerPair.remove(partnerId);
         partnerDb.remove(partnerId);
