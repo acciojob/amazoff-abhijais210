@@ -111,7 +111,7 @@ public class OrderRepository {
             if(assignedOrderDb.get(oID).equals(partnerId))
                 orderId.add(oID);
         }
-        //now traverse the OrderId List and remove assignOrderDB key set
+        //now traverse the OrderId List and compare with assignOrderDB key set
         for(String oID : orderId){
             assignedOrderDb.remove(oID);
         }
@@ -123,7 +123,7 @@ public class OrderRepository {
         String partnerId = assignedOrderDb.get(orderId);
         for(String oId : orderPartnerPair.get(partnerId)){
             if(oId.equals(orderId)){
-                orderPartnerPair.get(partnerId).remove(orderId);
+                orderPartnerPair.get(partnerId).remove("orderId");
                 //now update the order number for that partner also
                 int orderCount = getPartnerById(partnerId).getNumberOfOrders();
                 getPartnerById(partnerId).setNumberOfOrders(orderCount-1);
