@@ -13,7 +13,6 @@ public class OrderRepository {
     public HashMap<String,Order> orderDb = new HashMap<>();
     public HashMap<String,DeliveryPartner> partnerDb = new HashMap<>();
     public HashMap<String, List<String>> orderPartnerPair = new HashMap<>();
-  //  public HashMap<String,String> assignedOrderDb = new HashMap<>();
 
 
     public void addOrder(Order order){
@@ -33,7 +32,6 @@ public class OrderRepository {
 
             orders.add(orderId);
             orderPartnerPair.put(partnerId,orders);
-            //assignedOrderDb.put(orderId,partnerId);
 
             //we will also update the number of orders for that Delivery partner
 
@@ -66,9 +64,6 @@ public class OrderRepository {
         }
         //now from total Orders we will remove assigned orders now, we will be left with unsigned orders
         return orderDb.size()-assignOrders;
-
-        //now a little more Optimal way
-       // return orderDb.size() - assignedOrderDb.size();
     }
     public int getOrdersLeftAfterGivenTimeByPartnerId(int intTime,String partnerId){
         int count = 0;
@@ -105,30 +100,11 @@ public class OrderRepository {
         return time;
     }
     public void deletePartnerById(String partnerId){
-        //now remove partner from assigned order MAP
-//        List<String> orderId = new ArrayList<>();
-//        for(String oID : assignedOrderDb.keySet()){
-//            if(assignedOrderDb.get(oID).equals(partnerId))
-//                orderId.add(oID);
-//        }
-//        //now traverse the OrderId List and compare with assignOrderDB key set
-//        for(String oID : orderId){
-//            assignedOrderDb.remove(oID);
-//        }
         orderPartnerPair.remove(partnerId);
         partnerDb.remove(partnerId);
     }
     public void deleteOrderById(String orderId){
-        //before removing order from assignedOrderDb , store partner for that order
-//        String partnerId = assignedOrderDb.get(orderId);
-//        for(String oId : orderPartnerPair.get(partnerId)){
-//            if(oId.equals(orderId)){
-//                orderPartnerPair.get(partnerId).remove("orderId");
-//                //now update the order number for that partner also
-//                int orderCount = getPartnerById(partnerId).getNumberOfOrders();
-//                getPartnerById(partnerId).setNumberOfOrders(orderCount-1);
-//            }
-//        }
+
         for(Map.Entry<String,List<String>> map : orderPartnerPair.entrySet()){
             List<String> orders = map.getValue();
             String key = map.getKey();
@@ -140,6 +116,5 @@ public class OrderRepository {
             }
         }
         orderDb.remove(orderId);
-    //    assignedOrderDb.remove(orderId);
     }
 }
