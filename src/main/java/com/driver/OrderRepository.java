@@ -52,8 +52,8 @@ public class OrderRepository {
     public List<String> getOrdersByPartnerId(String partnerId){
             return orderPartnerPair.get(partnerId);
     }
-    public List<String> getAllOrders(){
-        return new ArrayList<>(orderDb.keySet());
+    public List<Order> getAllOrders(){
+        return new ArrayList<>(orderDb.values());
     }
     public int getCountOfUnassignedOrders(){
 
