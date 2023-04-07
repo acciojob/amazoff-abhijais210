@@ -40,7 +40,7 @@ public class OrderService {
         return orderRepository.getOrdersByPartnerId(partnerId);
     }
     //get all the list of orders
-    public List<Order> getAllOrders(){
+    public List<String> getAllOrders(){
         return orderRepository.getAllOrders();
     }
     //get total numbers of Orders that have not been assigned yet to any of the delivery partners
